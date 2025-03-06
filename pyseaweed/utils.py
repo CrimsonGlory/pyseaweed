@@ -17,6 +17,7 @@ class Connection(object):
             self._conn = requests.Session()
         else:
             self._conn = requests
+        self.status_code = None
 
     def _prepare_headers(self, additional_headers=None, **kwargs):
         """Prepare headers for http communication.
@@ -43,6 +44,7 @@ class Connection(object):
         on provided url
         """
         res = self._conn.head(url, headers=self._prepare_headers(**kwargs))
+        self.status_code = res.status_code
         if res.status_code == 200:
             return res
         return None
@@ -64,6 +66,7 @@ class Connection(object):
 
         """
         res = self._conn.get(url, headers=self._prepare_headers(**kwargs))
+        self.status_code = res.status_code
         if res.status_code == 200:
             return res.text
         else:
@@ -87,6 +90,7 @@ class Connection(object):
 
         """
         res = self._conn.get(url, headers=self._prepare_headers(**kwargs))
+        self.status_code = res.status_code
         if res.status_code == 200:
             return res.content
         else:
@@ -118,6 +122,7 @@ class Connection(object):
             files={'file': (filename, file_stream) if content_type is None else (filename, file_stream, content_type)},
             headers=self._prepare_headers(**kwargs),
         )
+        self.status_code = res.status_code
         if res.status_code == 200 or res.status_code == 201:
             return res.text
         else:
@@ -139,6 +144,7 @@ class Connection(object):
             Boolean. True if request was successful. False if not.
         """
         res = self._conn.delete(url, headers=self._prepare_headers(**kwargs))
+        self.status_code = res.status_code
         if res.status_code == 200 or res.status_code == 202:
             return True
         else:

@@ -99,6 +99,7 @@ class SeaweedFS(object):
         :param integer volume_id: volume_id
         :rtype: namedtuple `FileLocation` `{"public_url":"", "url":""}`
         """
+        print("seaweed.py get_file_location volume_id: ", volume_id)
         url = (
             "http://{master_addr}:{master_port}/"
             "dir/lookup?volumeId={volume_id}"
@@ -107,7 +108,11 @@ class SeaweedFS(object):
             master_port=self.master_port,
             volume_id=volume_id,
         )
-        data = json.loads(self.conn.get_data(url))
+        print("seaweed.py get_file_location url: ", url)
+        response = self.conn.get_data(url)
+        print("seaweed.py get_file_location response: ", response)
+        print("seaweed.py get_file_location self.conn.status_code: ", self.conn.status_code)
+        data = json.loads(response)
         _file_location = random.choice(data["locations"])
         FileLocation = namedtuple("FileLocation", "public_url url")
         return FileLocation(_file_location["publicUrl"], _file_location["url"])

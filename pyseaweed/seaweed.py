@@ -89,6 +89,7 @@ class SeaweedFS(object):
         url = "http://{volume_url}/{fid}".format(
             volume_url=volume_url, fid=fid
         )
+        print("seaweed.py get_file_url fid: %s, url: %s" % (fid, url))
         return url
 
     def get_file_location(self, volume_id):
@@ -157,7 +158,9 @@ class SeaweedFS(object):
 
         :param string fid: File ID
         """
+        print("seaweed.py delete_file fid: ", fid)
         url = self.get_file_url(fid)
+        print("seaweed.py delete_file url: ", url)
         return self.conn.delete_data(url)
 
     def upload_file(self, path=None, stream=None, name=None, additional_headers=None, content_type=None, **kwargs):

@@ -7,6 +7,7 @@ to easeup communication with seaweed-fs
 """
 
 import requests
+import logging
 
 from pyseaweed.version import __version__
 
@@ -43,6 +44,8 @@ class Connection(object):
         """Returns response to http HEAD
         on provided url
         """
+        logging.debug("pyseaweed: utils.py Connection. head() url=%s" % url)
+        print("print pyseaweed: utils.py Connection. head() url=%s" % url)
         res = self._conn.head(url, headers=self._prepare_headers(**kwargs))
         self.status_code = res.status_code
         if res.status_code == 200:
@@ -65,6 +68,8 @@ class Connection(object):
             string
 
         """
+        logging.debug("pyseaweed: utils.py Connection. get_data() url=%s" % url)
+        print("print pyseaweed: utils.py Connection. get_data() url=%s" % url)
         res = self._conn.get(url, headers=self._prepare_headers(**kwargs))
         self.status_code = res.status_code
         if res.status_code == 200:
@@ -89,6 +94,8 @@ class Connection(object):
             bytes
 
         """
+        logging.debug("pyseaweed: utils.py Connection. get_raw_data() url=%s" % url)
+        print("print pyseaweed: utils.py Connection. get_raw_data() url=%s" % url)
         res = self._conn.get(url, headers=self._prepare_headers(**kwargs))
         self.status_code = res.status_code
         if res.status_code == 200:
@@ -117,6 +124,8 @@ class Connection(object):
         Returns:
             string
         """
+        logging.debug("pyseaweed: utils.py Connection. post_file() url=%s" % url)
+        print("print_pyseaweed: utils.py Connection. post_file() url=%s" % url)
         res = self._conn.post(
             url,
             files={'file': (filename, file_stream) if content_type is None else (filename, file_stream, content_type)},
@@ -143,6 +152,8 @@ class Connection(object):
         Returns:
             Boolean. True if request was successful. False if not.
         """
+        logging.debug("pyseaweed: utils.py Connection. delete_data() url=%s" % url)
+        print("print_pyseaweed: utils.py Connection. delete_data() url=%s" % url)
         res = self._conn.delete(url, headers=self._prepare_headers(**kwargs))
         self.status_code = res.status_code
         if res.status_code == 200 or res.status_code == 202:
